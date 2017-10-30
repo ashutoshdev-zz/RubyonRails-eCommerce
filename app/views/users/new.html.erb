@@ -1,0 +1,30 @@
+<h1>New User</h1>
+
+
+<%= form_for(@user) do |f| %>
+  <div class="field">
+    <%= f.label "First Name" %>
+    <%= f.text_field :firstname %>
+  </div>
+  <div class="field">
+    <%= f.label "Last Name" %>
+    <%= f.text_field :lastname %>
+  </div>
+  <div class="field">
+    <%= f.label "Location" %>
+    <%= f.text_field :location %>
+  </div>
+  <div class="field">
+    <%= f.label "Phone Number" %>
+    <%= f.text_field :number %>
+  </div>
+  <div class="field">
+    <%= f.label "Email Id" %>
+    <%= f.text_field :email %>
+  </div>
+
+  <div class="actions">
+
+    <%= f.submit %>
+  </div>
+<% end %>

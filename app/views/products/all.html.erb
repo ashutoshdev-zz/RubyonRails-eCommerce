@@ -1,0 +1,25 @@
+<table>
+  <tr>
+      <th style="width:200px;overflow:hidden;">Id</th>
+      <th style="width:200px;overflow:hidden;">Product Name</th>
+      <!-- <th style="width:200px;overflow:hidden;">Product Description</th> -->
+      <th style="width:200px;overflow:hidden;">Product Category</th>
+      <th style="width:200px;overflow:hidden;">Price</th>
+  </tr>
+<% @products.each do |p| %>
+  <tr>
+      <td style="width:200px;overflow:hidden;"><%= p.id %></td>
+      <td style="width:200px;overflow:hidden;"><%= p.name %></td>
+      <!-- <td style="width:200px;overflow:hidden;"><%#= p.description %></td> -->
+      <td style="width:200px;overflow:hidden;"><%= p.category %></td>
+      <td style="width:200px;overflow:hidden;"><%= p.price %></td>
+
+      <td>
+        <%= link_to "Show", p %>
+        <%= link_to "Edit", edit_product_path(p) %>
+        <%= link_to 'Delete', p ,method: :delete, data: { confirm: 'Are you sure?' } %>
+      </td>
+
+    </tr>
+<%end%>
+</table>

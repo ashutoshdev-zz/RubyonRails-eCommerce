@@ -1,0 +1,74 @@
+<div class = "parent-container">
+
+  <div class ="search-bar">
+    <div class="place">
+      <p>Place</p>
+    </div>
+
+    <div class="search-input">
+      <input type="text" placeholder="Search">
+    </div>
+
+    <div class="search">
+      <p> Search</p>
+
+    </div>
+
+  </div>
+  <div  class="header-cart">
+    <i class = "material-icons header-cart-icon" style = "color:#ffffff">shopping_cart</i>
+    <span class="header-cart-name">CART</span>
+    <span class = "header-cart-quantity">0</span>
+  </div>
+</div>
+
+
+<div class = "banner-container">
+  <div class ="left-arrow">
+
+  </div>
+  <div class="right-arrow">
+  </div>
+</div>
+
+<div class = "products">
+  <div class = "products-brand-container">
+  </div>
+
+  <div class = "products-main-container">
+    <%#for x in 1..2 do %>
+    <%@products.each do |product| %>
+    <a href="/products/<%= product.id %>">
+    <div class="col-md-4 all-products">
+      <div class="single-product">
+        <img src="<%= product.url %>" class="img-responsive" />
+        <div class="product-info">
+            <!-- <p class="name">Samsung Note3</p> -->
+            <p class="name"><%= product.name %></p>
+            <p class="price"><%= product.price%> <span style="float:right">Add to Cart</span></p>
+        </div>
+      </div>
+    </div>
+  </a>
+    <%# end %>
+
+
+    <%end%>
+  </div>
+</div>
+
+
+
+
+
+
+<!-- <div class="parent-class">
+  <% for x in 1..20 do %>
+    <div class="col-md-3 col-sm-4 product-container">
+      <div class="product-main-container">
+        <div class="title-bar"
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div> -->

@@ -1,0 +1,196 @@
+<!-- Header Container -->
+<div class="header-container">
+  <div class = "parent-container">
+
+    <div class ="search-bar">
+      <div class="place">
+        <p>Place</p>
+      </div>
+
+      <div class="search-input">
+        <input type="text" placeholder="Search">
+      </div>
+
+      <div class="search">
+        <p> Search</p>
+
+      </div>
+
+    </div>
+    <div  class="header-cart">
+
+      <i class = "material-icons header-cart-icon" style = "color:#ffffff">shopping_cart</i>
+      <span class="header-cart-name">CART</span>
+      <span id = "cart-number-id"class = "header-cart-quantity">0</span>
+    </div>
+  </div>
+
+</div>
+
+<!-- Content Container -->
+<div id = "cart-main-container">
+  <!-- Cart Container -->
+  <div class="cart-container" id="cart" style="padding:4px;">
+        <!-- Title -->
+        <!-- <div class="cart-title">
+            Shopping Bag
+        </div> -->
+        <!-- Item Card -->
+        <!-- <div class="cart-list-card"> -->
+        <!-- Delete and Fav -->
+        <!-- <div class="cart-buttons">
+          <span class="delete-btn"></span>
+          <span class="like-btn"></span>
+        </div> -->
+        <!-- Image -->
+        <!-- <div class="cart-product-image">
+          <%= image_tag("phone.jpeg") %>
+        </div> -->
+        <!-- Description -->
+        <!-- <div class="description">
+         <span>Maison Margiela</span>
+         <span>Future Sneakers</span>
+         <span>White</span>
+       </div> -->
+       <!-- Quantity -->
+       <!-- <div class="cart-quantity">
+          <button class="cart-plus-btn" type="button" name="button">
+            <%= image_tag("plus.svg") %>
+          </button>
+          <input type="text" name="name" value="1">
+          <button class="cart-minus-btn" type="button" name="button">
+            <%= image_tag("minus.svg") %>
+          </button>
+       </div> -->
+       <!-- Price -->
+       <!-- <div class="total-price">$549</div> -->
+     <!-- </div> -->
+  </div>
+  <div class="summary-container">
+
+  </div>
+</div>
+
+
+<script type="text/javascript">
+    var products;
+    var productString = localStorage.getItem("products");
+    console.log(productString);
+    if(productString === null){
+      products = [];
+    }else{
+      products = JSON.parse(productString);
+    }
+
+    if(products.length === 0){
+      var obj = document.getElementById("cart-main-container");
+      obj.innerHTML = `<div class="cart-title">Shopping Bag</div>\
+                       <img src = "https://img1a.flixcart.com/www/linchpin/fk-cp-zion/img/empty-cart_ee6141.png"
+                            style = "height:200px;width:200px;margin:auto;display:block;padding-top:50px"/>\
+                       <p style="font-family:Roboto, Arial, sans-serif;font-size:18px;position:absolute;right:41%;">
+                              Your Shopping Bag is Empty</p>`;
+      obj.className = "empty-cart";
+    }
+
+
+    for(var i=0;i<products.length;i++){
+      console.log(i);
+      var cart_container = document.getElementById("cart");
+
+      var cart_list_card = document.createElement("div");
+      cart_list_card.className = "cart-list-card";
+      var cart_buttons = document.createElement("div");
+      cart_buttons.className = "cart-buttons";
+      // var deletButtonSpan = document.createElement("span");
+      // deleteButtonSpan.className = "delete-btn";
+      // cart_buttons.append(deleteButtonSpan);
+      // var likeButtonSpan = document.createElement("span");
+      // likeButtonSpan.className = "like-btn";
+      // cart_buttons.append(likeButtonSpan);
+      cart_buttons.innerHTML = `<span onclick = "deleteProduct('${products[i].id}')" class="delete-btn" style="margin-right:20px"></span>\
+                                <span class="like-btn"></span>`;
+      var cart_product_image = document.createElement("div")
+      cart_product_image.className = "cart-product-image";
+      cart_product_image.innerHTML = `<img src="${products[i].url}" style="height:100px;width:120px;" />`;
+
+      var descrip = document.createElement("div");
+      descrip.className = "description";
+      descrip.innerHTML = `<span>${products[i].name}</span>\
+                           <span>${products[i].category}</span>`;
+      var cart_quantity = document.createElement("div");
+      cart_quantity.className = "cart-quantity";
+      cart_quantity.innerHTML = `<button onclick="increaseQuantity('${products[i].id}')" class="cart-plus-btn" type="button" name="button">\
+                                    <%= image_tag("plus.svg") %>\
+                                </button>\
+                                <input id="quantity-number-${products[i].id}" type="text" name="name" value="1" style = "-webkit-appearance: none;\
+                                border: none;text-align: center;width: 32px;font-size: 16px;color: #43484D;\
+                                font-weight: 300;">\
+                                <button onclick = "decreaseQuantity('${products[i].id}')"class="cart-minus-btn" type="button" name="button">\
+                                    <%= image_tag("minus.svg") %>\
+                                </button>`;
+      var total_price = document.createElement("div");
+      total_price.className = "total-price";
+      total_price.innerHTML = '$529';
+      cart_list_card.append(cart_buttons);
+      cart_list_card.append(cart_product_image);
+      cart_list_card.append(descrip);
+      cart_list_card.append(cart_quantity);
+      cart_list_card.append(total_price);
+      cart_container.append(cart_list_card);
+    }
+
+    var products;
+    var jsonString = localStorage.getItem("products");
+    if(jsonString === null){
+      products = [];
+    }else{
+      products = JSON.parse(jsonString);
+      document.getElementById("cart-number-id").innerHTML = products.length;
+    }
+
+
+    function increaseQuantity(id){
+      var obj = document.getElementById("quantity-number-" + id);
+      obj.value = Number(obj.value) + 1;
+      console.log(obj.value);
+      updateQuntity(id,obj.value);
+      return Number(obj.value);
+    }
+
+
+    function decreaseQuantity(id){
+      var obj = document.getElementById("quantity-number-"+id);
+      if(obj.value != 1){
+        obj.value =  Number(obj.value)-1;
+        updateQuntity(id,obj.value);
+      }
+    }
+
+    function updateQuntity(id,quantity){
+      for(var i=0;i<products.length;i++){
+        if(products[i].id == id){
+          products[i].quantity = quantity;
+          break;
+        }
+      }
+    }
+
+    function deleteProduct(id){
+      for(var i=0;i<products.length;i++){
+        if(products[i].id == id){
+          products.splice(i,1);
+          localStorage.setItem("products",JSON.stringify(products));
+          location.reload();
+        }
+      }
+
+    }
+
+
+
+    $('.like-btn').on('click', function() {
+      $(this).toggleClass('is-active');
+    });
+
+
+</script>

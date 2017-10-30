@@ -1,0 +1,148 @@
+<div class = "parent-container">
+
+  <div class ="search-bar">
+    <div class="place">
+      <p>Place</p>
+    </div>
+
+    <div class="search-input">
+      <input type="text" placeholder="Search">
+    </div>
+
+    <div class="search">
+      <p> Search</p>
+
+    </div>
+
+  </div>
+  <div  class="header-cart">
+    <a href="/products/cart">
+    <i class = "material-icons header-cart-icon" style = "color:#ffffff">shopping_cart</i>
+    <span class="header-cart-name">CART</span>
+    <span id="cart-number-id" class = "header-cart-quantity">0</span></a>
+  </div>
+</div>
+
+<div class="show-image">
+  <img src="<%= @product.url %>" class="img-responsive"  style="width:100%;"/>
+</div>
+<div class="show-product-info">
+  <div class="show-path">
+    <p>Home > Delhi > Cruiser > Royal Enfield Classic 350</p>
+  </div>
+
+  <div class="show-product-name">
+    <p class="product-name">Royal Enfield Classic 350<span class="product-rating">3.7 stars (21 votes)</span></p>
+    <p class="product-price"> 73,465<span class="showroom-price">Ex-showroom Price, Delhi</span></p>
+    <p class="cart" onclick="addToCart()">
+      <i class="material-icons cart-icon">shopping_cart</i>
+      <span style="position:relative;top:-3px;">Add to Cart</span>
+    </p>
+    <p onclick="clearLocal()" style="cursor:pointer;">clear local storage</p>
+    <div id="test">
+    </div>
+  </div>
+
+<div class="show-description">
+  <div class="description-title">
+      <div class="button active" id="button-description" onclick="changeTask('button-description')">
+        <p>DESCRIPTION</p>
+      </div>
+      <div class = "button" id="button-tnc" onclick="changeTask('button-tnc')">
+        <p>TERMS AND CONDITION</p>
+     </div>
+     <div style="clear:both;"></div>
+  </div>
+  <div class="content-container">
+    <div class="show-content active-content" id="button-description-content">
+      <p><%= @product.description %></p>
+    </div>
+    <div class="show-content" id="button-tnc-content">
+      <p>Terms and conditions</p>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+  var oldId = "button-description";
+  function changeTask(id){
+    if(id != oldId){
+      document.getElementById(oldId).classList.remove("active");
+      document.getElementById(id).classList.add("active");
+      document.getElementById(oldId+"-content").classList.remove("active-content");
+      document.getElementById(id+"-content").classList.add("active-content");
+      oldId=id;
+    }
+
+  }
+
+  var products;
+  var jsonString = localStorage.getItem("products");
+  if(jsonString === null){
+    products = [];
+  }else{
+    console.log(jsonString);
+    products = JSON.parse(jsonString);
+    document.getElementById("cart-number-id").innerHTML = products.length;
+  }
+
+
+  function addToCart(){
+    if(!checkProduct()){
+      var product = {};
+      product.id = '<%= @product.id %>';
+      product.name = '<%= @product.name %>';
+      product.url = '<%= @product.url %>';
+      product.price = '<%= @product.price %>';
+      product.category = '<%= @product.category %>'
+      products.push(product);
+      localStorage.setItem("products",JSON.stringify(products));
+      var cartNum = document.getElementById("cart-number-id");
+      cartNum.innerHTML = products.length;
+    }
+
+  }
+
+  function checkProduct(){
+    var result = false;
+    if(products != null || products != []){
+      for(var i=0;i<products.length;i++){
+        if(products[i].id == <%= @product.id %>){
+          result = true;
+          break;
+        }
+      }
+    }
+    return result;
+  }
+
+  function clearLocal(){
+    localStorage.removeItem("products");
+    alert("removed");
+
+  }
+
+
+  var parent = document.getElementById("test");
+  var pTag = document.createElement("P");
+
+  parent.append(pTag);
+</script>
